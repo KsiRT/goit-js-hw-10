@@ -8,26 +8,16 @@ const selectorOfBreed = document.querySelector('.breed-select');
 
 const url = 'https://api.thecatapi.com/v1/breeds';
 
-// const create = CatAPI.fetchBreeds(url);
-
-function createOptions() {
-  const structuredData = renderOptions(CatAPI.fetchBreeds(url));
-
-  selectorOfBreed.insertAdjacentHTML('afterbegin', structuredData);
-}
-createOptions();
-function renderOptions(arr) {
-  try {
-    const res = arr.map(
-      (cat => {
-        console.log(cat);
+function renderOptions() {
+  CatAPI.fetchBreeds(url).then(data => {
+    const res = data
+      .map(cat => {
         return `<option value="${cat.id}"> ${cat.name} </option>`;
-      }).join('')
-    );
-    console.log(res);
-  } catch (er) {
-    console.log(er);
-  }
+      })
+      .join('');
+    selectorOfBreed.insertAdjacentHTML('afterbegin', res);
+  });
 }
+renderOptions();
 
 /* <option value="1"> Miner </option>; */
